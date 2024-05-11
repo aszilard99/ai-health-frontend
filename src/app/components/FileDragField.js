@@ -63,8 +63,36 @@ export default function FileDragField({ file, setFile }) {
             </div>
             }
             {file && 
-            <div className="text-center">Uploaded file browser blob url: {file}</div>
+            <>
+                <div className="text-center">Uploaded file browser blob url: {file}</div>
+                <button type='button' className="classify-image-btn" onClick={()=>{
+                    file && uploadFile(file);
+                }}>
+                    Classify image
+                </button>
+            </>
             }
         </div>
     )
+}
+
+function uploadFile (file) {
+    const formData = new FormData();
+    //TODO this parameter name might have to be changed according to endpoint param name
+    formData.set('image', file);
+    sendRequest(formData);
+}
+
+async function sendRequest (formData) {
+    try {
+        const response = await fetch("http://127.0.0.1:8080/classify", {
+            method: "POST",
+            body: formData
+        });
+        const result = await response.json();
+        console.log("Success: ", result);
+
+    } catch (error) {
+        console.error("Error: ", error);
+    }
 }
