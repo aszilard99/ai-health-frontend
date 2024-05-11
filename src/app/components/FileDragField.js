@@ -76,10 +76,11 @@ export default function FileDragField({ file, setFile }) {
     )
 }
 
-function uploadFile (file) {
+async function uploadFile (imageObjectUrl) {
     const formData = new FormData();
+    const blob = await fetch(imageObjectUrl).then(r => r.blob());
     //TODO this parameter name might have to be changed according to endpoint param name
-    formData.set('image', file);
+    formData.set('image', blob);
     sendRequest(formData);
 }
 
