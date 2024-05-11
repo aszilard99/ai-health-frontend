@@ -1,7 +1,6 @@
 import { useState } from "react"
 
-export default function FileDragField() {
-    const [file, setFile] = useState('');
+export default function FileDragField({ file, setFile }) {
     const [fileEnter, setFileEnter] = useState(false);
     return (
             <div className="container">
@@ -62,6 +61,9 @@ export default function FileDragField() {
                         }}
                     />
             </div>
+            }
+            {file && 
+            <div className="text-center">Uploaded file browser blob url: {file}</div>
             }
         </div>
     )
