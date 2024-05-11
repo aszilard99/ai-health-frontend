@@ -2,6 +2,32 @@ import { useState } from "react"
 
 export default function FileDragField({ file, setFile }) {
     const [fileEnter, setFileEnter] = useState(false);
+    const [result, setResult] = useState(null);
+    let myFile;
+
+    function uploadFile (file) {
+
+        const formData = new FormData();
+        //TODO this parameter name might have to be changed according to endpoint param name
+        formData.append('image', file);
+        sendRequest(formData);
+    }
+    
+    async function sendRequest (formData) {
+        try {
+            const response = await fetch("http://127.0.0.1:8080/classify", {
+                method: "POST",
+                body: formData
+            });
+            const result = await response.json();
+            setResult(result);
+            console.log("Success: ", result);
+    
+        } catch (error) {
+            console.error("Error: ", error);
+        }
+    }
+
     return (
             <div className="container">
                 {!file && <div 
@@ -24,8 +50,7 @@ export default function FileDragField({ file, setFile }) {
                                 if (item.kind == 'file') {
                                     const file  = item.getAsFile();
                                     if (file) {
-                                        let blobUrl = URL.createObjectURL(file);
-                                        setFile(blobUrl);
+                                        uploadFile(file);
                                     }
                                     console.log(`item file[${i}].name = ${file?.name}`);
                                 }
@@ -55,8 +80,7 @@ export default function FileDragField({ file, setFile }) {
                             console.log(e.target.files);
                             const files = e.target.files;
                             if (files && files[0]) {
-                                let blobUrl = URL.createObjectURL(files[0]);
-                                setFile(blobUrl);
+                                uploadFile(files[0]);
                             } 
                         }}
                     />
@@ -66,34 +90,18 @@ export default function FileDragField({ file, setFile }) {
             <>
                 <div className="text-center">Uploaded file browser blob url: {file}</div>
                 <button type='button' className="classify-image-btn" onClick={()=>{
-                    file && uploadFile(file);
+                    file && uploadFile(myFile);
                 }}>
                     Classify image
                 </button>
             </>
             }
+            {result && 
+                <div >
+                    Result is: {result}
+                </div>
+            }
         </div>
     )
 }
 
-async function uploadFile (imageObjectUrl) {
-    const formData = new FormData();
-    const blob = await fetch(imageObjectUrl).then(r => r.blob());
-    //TODO this parameter name might have to be changed according to endpoint param name
-    formData.set('image', blob);
-    sendRequest(formData);
-}
-
-async function sendRequest (formData) {
-    try {
-        const response = await fetch("http://127.0.0.1:8080/classify", {
-            method: "POST",
-            body: formData
-        });
-        const result = await response.json();
-        console.log("Success: ", result);
-
-    } catch (error) {
-        console.error("Error: ", error);
-    }
-}
