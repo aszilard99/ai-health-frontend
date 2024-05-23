@@ -42,7 +42,7 @@ export default function LinearGauge({result}) {
         ]
         
         chart_w = containerRef.current.clientWidth;
-        resultPos = isNaN(result) ? chart_w * 1 : chart_w * result;
+        resultPos = isNaN(result) ? chart_w * 1 : chart_w * result + 1;
         text_margins = {
             top: chart_y_pos + height + 35,
             right: 10,
@@ -110,8 +110,8 @@ export default function LinearGauge({result}) {
 
             tickMark.append("text")
                 .transition()
-                .attr("x", resultPos / 1.3)
-                .attr("y", (height + chart_y_pos) / 1.3)
+                .attr("x", resultPos - 20)
+                .attr("y", height * 2)
                 .text(Math.round((result * 100) * 100) / 100 + " %");
         }
         
