@@ -2,9 +2,9 @@ import { useState } from "react"
 import Image from "next/image";
 import image from "../assets/icons/gauge.png"
 
-export default function FileDragField({ file, setFile }) {
+export default function FileDragField({ file, setFile, result, setResult }) {
     const [fileEnter, setFileEnter] = useState(false);
-    const [result, setResult] = useState(null);
+    
     let myFile;
 
     function uploadFile (file) {
@@ -95,11 +95,6 @@ export default function FileDragField({ file, setFile }) {
                     Classify image
                 </button>
             </>
-            }
-            {result && 
-                <div >
-                    Result is: {result}
-                </div>
             }
         <div style={{ position: 'relative', width: '100%', height: '200px'}}>
 

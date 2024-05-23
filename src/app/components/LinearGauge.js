@@ -8,7 +8,6 @@ const useWindowSize = () => {
     useLayoutEffect(() => {
       const updateSize = () => {
         setSize([window.innerWidth, window.innerHeight]);
-        d3.selectAll('svg').remove();
       };
       window.addEventListener("resize", updateSize);
       return () => window.removeEventListener("resize", updateSize);
@@ -16,7 +15,7 @@ const useWindowSize = () => {
     return size;
   };
 
-export default function LinearGauge() {
+export default function LinearGauge({result}) {
 
     const [width2, height2] = useWindowSize();
 
@@ -28,10 +27,11 @@ export default function LinearGauge() {
     var resultPos;
     var text_margins;
     var chart_y_pos;
+    var tickMark;
     var height = 30;
-    var result = 0.99;
 
     useEffect(()=> {
+        d3.selectAll('svg').remove();
         container = d3.select(containerRef.current);
         width = parseFloat(container.style("width"));
         var gaugeScale = [
@@ -58,7 +58,7 @@ export default function LinearGauge() {
             .domain(scaleValue)
             .range(scaleColor);
 
-        var svg = d3.select('#linear-gauge').append("svg").attr("width", '100%').attr("height", '100%');
+        var svg = d3.select('#linear-gauge').append("svg").attr("width", '100%').attr("height", '100%').attr('overflow', 'visible');
         var defs = svg.append('defs');
 
         var linearGradient = defs.append('linearGradient')
@@ -89,41 +89,38 @@ export default function LinearGauge() {
             .attr('height', height)
             .style('fill', 'url(#linear-gradient)');
 
-        svg.append("g")
+        //appends High Risk text at the end of the gauge
+        /*svg.append("g")
         .append("text")
         .classed("gaugeLabel", true)
         .attr("x", chart_w - 30)
         .attr("y", (height + chart_y_pos) / 1.3) 
-        .attr("text-anchor", "end").text(gaugeScale[3].risk);
+        .attr("text-anchor", "end").text(gaugeScale[3].risk);*/
 
-        var tickMark = svg.append("g");
-        tickMark.append("line")
-            .transition()
-            .attr("x1", resultPos)
-            .attr("y1", chart_y_pos)
-            .attr("x2", resultPos)
-            .attr("y2", height + chart_y_pos)
-            .attr("stroke-width", 2)
-            .attr("stroke", "black");
+        if (result > 0) {
+            tickMark = svg.append("g");
+            tickMark.append("line")
+                .transition()
+                .attr("x1", resultPos / 1.01)
+                .attr("y1", chart_y_pos - 3)
+                .attr("x2", resultPos / 1.01)
+                .attr("y2", height + chart_y_pos + 3)
+                .attr("stroke-width", 2)
+                .attr("stroke", "black");
 
-        tickMark.append("circle")
-            .transition()
-            .attr("cx", resultPos)
-            .attr("cy", (height + chart_y_pos) / 2)
-            .attr("r", 5);
-
-        tickMark.append("text")
-            .transition()
-            .attr("x", resultPos / 0.95)
-            .attr("y", (height + chart_y_pos) / 1.2)
-            .text(Math.round((result * 100) * 100) / 100 + " %");
+            tickMark.append("text")
+                .transition()
+                .attr("x", resultPos / 1.3)
+                .attr("y", (height + chart_y_pos) / 1.3)
+                .text(Math.round((result * 100) * 100) / 100 + " %");
+        }
+        
     });
 
     return(
         <div>
             <div id="linear-gauge" ref={containerRef}>
             </div>
-            Linear gauge
         </div>
     );
 }

@@ -12,14 +12,15 @@ const calistoga = Calistoga({
 
 export default function Home() {
   const [file, setFile] = useState('');
+  const [result, setResult] = useState(null);
 
   return (
     <main>
       <div className="navbar">
         <p className={calistoga.className} id="navbar-text">Ai-Health</p>
       </div>
-      <FileDragField file={file} setFile={setFile}/>
-      <LinearGauge/>
+      <FileDragField file={file} setFile={setFile} result={result} setResult={setResult}/>
+      <LinearGauge result={result}/>
     </main>
   );
 }
