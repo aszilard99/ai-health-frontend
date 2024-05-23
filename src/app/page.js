@@ -1,9 +1,13 @@
 'use client'
 
 import { useState } from "react"
-import logo from './assets/icons/Logo.png'
-import Image from 'next/image';
 import FileDragField from './components/FileDragField';
+import { Calistoga } from "next/font/google";
+
+const calistoga = Calistoga({
+  subsets: ['latin'],
+  weight: "400"
+})
 
 export default function Home() {
   const [file, setFile] = useState('');
@@ -11,7 +15,7 @@ export default function Home() {
   return (
     <main>
       <div className="navbar">
-        <Image className='logo' src={logo} width={40} height={40}></Image>
+        <p className={calistoga.className} id="navbar-text">Ai-Health</p>
       </div>
       <FileDragField file={file} setFile={setFile}/>
     </main>

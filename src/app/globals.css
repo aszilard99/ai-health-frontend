@@ -1,42 +1,56 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 body {
   color: rgb(0, 0, 0);
-  background: 'white';
+  background: rgb(255 249 224);
+  height: 100%;
 }
 
 .navbar {
   width: 100%;
-  height: fit-content;
+  height: 50px;
   border-bottom: 2px solid;
-  background-color: rgb(254, 203, 114);
+  background-color: rgb(255 249 224);
+  display: flex;
+  align-items: center;
 }
 
-.logo {
-  padding: 10px 0 10px 10px;
-  margin-left: 5px;
-}
-
-.container {
-  margin-top: 5em;
+#navbar-text {
+  color: rgb(0, 0, 0);
+  font-size: 20px;
+  margin-left: 10px;
 }
 
 .classify-image-btn {
   background-color: rgb(0, 4, 255);
-  color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
   border-radius: 10px;
   padding: 8px 20px;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .classify-image-btn:hover {
   background-color: rgb(92, 94, 255);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.drag-field-normal {
+  border: 1px solid black;
+  width: 300px;
+  height: 300px;
+  margin: auto;
+}
+
+.drag-field-highlighted {
+  border: 2px solid black;
+  width: 300px;
+  height: 300px;
+  margin: auto;
+}
+
+.drag-field-label {
+  justify-content: center;
+  align-self: center;
+}
+
+.drag-field-input {
+  display: none;
 }

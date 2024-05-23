@@ -1,4 +1,6 @@
 import { useState } from "react"
+import Image from "next/image";
+import image from "../assets/icons/gauge.png"
 
 export default function FileDragField({ file, setFile }) {
     const [fileEnter, setFileEnter] = useState(false);
@@ -61,21 +63,19 @@ export default function FileDragField({ file, setFile }) {
                             })
                         }
                     }}
-                    className={`${
-                        fileEnter ? "border-4" : "border-2"
-                    } mx-auto  bg-white flex flex-col w-full max-w-xs h-72 border-dashed items-center justify-center`}
+                    className={`${fileEnter ? "drag-field-highlighted" : "drag-field-normal"}`}
                     
                 >
                     <label
                         htmlFor="file"
-                        className="h-full flex flex-col justify-center text-center"
+                        className="drag-field-label"
                     >
                         Click to upload or drag and drop
                     </label>
                     <input 
                         id='file' 
                         type='file' 
-                        className='hidden'
+                        className="drag-field-input"
                         onChange={(e) => {
                             console.log(e.target.files);
                             const files = e.target.files;
@@ -101,6 +101,13 @@ export default function FileDragField({ file, setFile }) {
                     Result is: {result}
                 </div>
             }
+        <div style={{ position: 'relative', width: '100%', height: '200px'}}>
+            <Image fill 
+                src={image}
+                alt="Current Image" 
+                style={{objectFit: 'cover'}}
+            />
+        </div>
         </div>
     )
 }
