@@ -3,6 +3,7 @@
 import { useState } from "react"
 import FileDragField from './components/FileDragField';
 import { Calistoga } from "next/font/google";
+import LinearGauge from "./components/LinearGauge";
 
 const calistoga = Calistoga({
   subsets: ['latin'],
@@ -18,6 +19,7 @@ export default function Home() {
         <p className={calistoga.className} id="navbar-text">Ai-Health</p>
       </div>
       <FileDragField file={file} setFile={setFile}/>
+      <LinearGauge/>
     </main>
   );
 }

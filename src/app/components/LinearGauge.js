@@ -1,0 +1,105 @@
+import { useEffect } from "react";
+import * as d3 from 'd3';
+import '../linear-gauge.css'
+
+export default function LinearGauge() {
+    
+    useEffect(()=> {
+        var container = d3.select('#linear-gauge');
+        var width = parseFloat(container.style("width"));
+        var gaugeScale = [
+            { "color": "#00CC96", "value": 0.227, "depth": 0, "risk": "no risk"},
+            { "color": "#00E7AA", "value": 0.380, "depth": 1,"risk": "low risk"},
+            { "color": "#FFAA00", "value": 0.260, "depth": 2,"risk": "somewhat risk"},
+            { "color": "#FF0000", "value": 0.133, "depth": 3, "risk": "hight risk"},
+        ]
+        var result = 0.99;
+        var gauge_height = 30;
+        var chart_w = document.getElementById('linear-gauge').offsetWidth;
+        var resultPos = isNaN(result) ? chart_w * 1 : chart_w * result;
+        var text_margins = {
+            top: chart_y_pos + gauge_height + 35,
+            right: 10,
+            bottom: 0,
+            left: 10
+        };
+        // Tick mark
+        var LF = 30;
+        var chart_y_pos = 0;
+
+        var scaleValue = gaugeScale.sort((a, b) => parseFloat(a.depth) - parseFloat(b.depth)).map(obj => obj.value);
+        var scaleColor = gaugeScale.sort((a, b) => parseFloat(a.depth) - parseFloat(b.depth)).map(obj => obj.color);
+        var color = d3.scaleLinear()
+            .domain(scaleValue)
+            .range(scaleColor);
+
+        var svg = d3.select('#linear-gauge').append("svg").attr("width", '100%').attr("height", '100%');
+        var defs = svg.append('defs');
+
+        var linearGradient = defs.append('linearGradient')
+            .attr('id', 'linear-gradient')
+            .attr('y1', '0%').attr('x1', '0%')
+            .attr('y2', '0%').attr('x2', '100%');
+
+        //Append multiple color stops by using D3's data/enter step
+        var offset = 0;
+        linearGradient.selectAll("stop")
+            .data(color.range())
+            .enter().append("stop")
+            .attr("offset", function(d, i) {
+                offset += color.domain()[i];
+                console.log(offset - color.domain()[i]);
+                return offset;
+            })
+            .attr("stop-color", function(d) {
+                console.log(d);
+                return d;
+                s
+            });
+
+        svg.append("g")
+            .append('rect')
+            .attr("rx", 6)
+            .attr("ry", 6)
+            .attr('width', width)
+            .attr('height', gauge_height)
+            .style('fill', 'url(#linear-gradient)');
+
+        svg.append("g")
+        .append("text")
+        .classed("gaugeLabel", true)
+        .attr("x", chart_w - 30) // to adapt
+        .attr("y", (gauge_height + chart_y_pos) / 1.3) //text_margins.top )
+        .attr("text-anchor", "end").text(gaugeScale[3].risk);
+
+        var tickMark = svg.append("g");
+        tickMark.append("line")
+            .transition()
+            .attr("x1", resultPos)
+            .attr("y1", chart_y_pos)
+            .attr("x2", resultPos)
+            .attr("y2", gauge_height + chart_y_pos)
+            .attr("stroke-width", 2)
+            .attr("stroke", "black");
+
+        tickMark.append("circle")
+            .transition()
+            .attr("cx", resultPos)
+            .attr("cy", (gauge_height + chart_y_pos) / 2)
+            .attr("r", 5);
+
+        tickMark.append("text")
+            .transition()
+            .attr("x", resultPos / 0.95)
+            .attr("y", (gauge_height + chart_y_pos) / 1.2)
+            .text(Math.round((result * 100) * 100) / 100 + " %");
+    }, []);
+
+    return(
+        <div>
+            <div id="linear-gauge">
+            </div>
+            Linear gauge
+        </div>
+    );
+}

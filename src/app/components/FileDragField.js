@@ -102,11 +102,7 @@ export default function FileDragField({ file, setFile }) {
                 </div>
             }
         <div style={{ position: 'relative', width: '100%', height: '200px'}}>
-            <Image fill 
-                src={image}
-                alt="Current Image" 
-                style={{objectFit: 'cover'}}
-            />
+
         </div>
         </div>
     )
