@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react"
-import Image from "next/image";
-import image from "../assets/icons/gauge.png"
+import { useState } from "react"
 
 export default function FileDragField({image, setImage, setResult}) {
     const [fileEnter, setFileEnter] = useState(false);

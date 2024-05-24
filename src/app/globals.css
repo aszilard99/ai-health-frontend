@@ -43,7 +43,7 @@ body {
 .drag-field-normal {
   border: 1px solid black;
   width: 300px;
-  height: 200px;
+  height: 300px;
   border-radius: 20px;
   margin: auto;
   display: flex;
@@ -53,7 +53,7 @@ body {
 .drag-field-highlighted {
   border: 2px solid black;
   width: 300px;
-  height: 200px;
+  height: 300px;
   border-radius: 20px;
   margin: auto;
   display: flex;
@@ -66,4 +66,15 @@ body {
 
 .drag-field-input {
   display: none;
+}
+
+.image-preview-card{
+  border-radius: 20px;
+  width: fit-content;
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  object-fit: cover;
 }
