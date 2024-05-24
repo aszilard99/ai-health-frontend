@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import FileDragField from './components/FileDragField';
 import { Calistoga } from "next/font/google";
 import LinearGauge from "./components/LinearGauge";
+import {Card, CardHeader, CardBody, Image} from "@nextui-org/react";
 
 const calistoga = Calistoga({
   subsets: ['latin'],
@@ -11,7 +12,7 @@ const calistoga = Calistoga({
 })
 
 export default function Home() {
-  const [file, setFile] = useState('');
+  const [image, setImage] = useState(null);
   const [result, setResult] = useState(null);
 
   return (
@@ -19,7 +20,7 @@ export default function Home() {
       <div className="navbar">
         <p className={calistoga.className} id="navbar-text">Ai-Health</p>
       </div>
-      <FileDragField file={file} setFile={setFile} result={result} setResult={setResult}/>
+      <FileDragField image={image} setImage={setImage} setResult={setResult}/>
       {result && <LinearGauge result={result}/>}
     </main>
   );

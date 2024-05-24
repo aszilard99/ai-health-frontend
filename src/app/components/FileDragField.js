@@ -1,14 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image";
 import image from "../assets/icons/gauge.png"
 
-export default function FileDragField({ file, setFile, result, setResult }) {
+export default function FileDragField({image, setImage, setResult}) {
     const [fileEnter, setFileEnter] = useState(false);
     
-    let myFile;
-
     function uploadFile (file) {
-
+        
         const formData = new FormData();
         //TODO this parameter name might have to be changed according to endpoint param name
         formData.append('image', file);
@@ -32,7 +30,7 @@ export default function FileDragField({ file, setFile, result, setResult }) {
 
     return (
             <div className="container">
-                {!file && <div 
+                <div 
                     onDragOver={(e) => {
                         e.preventDefault();
                         setFileEnter(true);
@@ -52,9 +50,9 @@ export default function FileDragField({ file, setFile, result, setResult }) {
                                 if (item.kind == 'file') {
                                     const file  = item.getAsFile();
                                     if (file) {
+                                        setImage(URL.createObjectURL(file));
                                         uploadFile(file);
                                     }
-                                    console.log(`item file[${i}].name = ${file?.name}`);
                                 }
                             });
                         } else {
@@ -80,22 +78,12 @@ export default function FileDragField({ file, setFile, result, setResult }) {
                             console.log(e.target.files);
                             const files = e.target.files;
                             if (files && files[0]) {
+                                setImage(URL.createObjectURL(files[0]));
                                 uploadFile(files[0]);
                             } 
                         }}
                     />
             </div>
-            }
-            {file && 
-            <>
-                <div className="text-center">Uploaded file browser blob url: {file}</div>
-                <button type='button' className="classify-image-btn" onClick={()=>{
-                    file && uploadFile(myFile);
-                }}>
-                    Classify image
-                </button>
-            </>
-            }
         <div style={{ position: 'relative', width: '100%', height: '200px'}}>
 
         </div>

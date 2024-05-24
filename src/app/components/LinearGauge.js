@@ -100,7 +100,6 @@ export default function LinearGauge({result}) {
         if (result > 0) {
             tickMark = svg.append("g");
             tickMark.append("line")
-                .transition()
                 .attr("x1", resultPos / 1.01)
                 .attr("y1", chart_y_pos - 3)
                 .attr("x2", resultPos / 1.01)
@@ -109,7 +108,6 @@ export default function LinearGauge({result}) {
                 .attr("stroke", "black");
 
             tickMark.append("text")
-                .transition()
                 .attr("x", resultPos - 20)
                 .attr("y", height * 2)
                 .text(Math.round((result * 100) * 100) / 100 + " %");
