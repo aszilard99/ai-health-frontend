@@ -20,7 +20,7 @@ export default function Home() {
         <p className={calistoga.className} id="navbar-text">Ai-Health</p>
       </div>
       <FileDragField file={file} setFile={setFile} result={result} setResult={setResult}/>
-      <LinearGauge result={result}/>
+      {result && <LinearGauge result={result}/>}
     </main>
   );
 }
