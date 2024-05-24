@@ -16,7 +16,8 @@ const useWindowSize = () => {
   };
 
 export default function LinearGauge({result}) {
-
+    
+    //this triggers a rerender on window resize
     const [width2, height2] = useWindowSize();
 
     const containerRef = useRef(null);

@@ -21,7 +21,7 @@ export default function FileDragField({image, setImage, setResult}) {
             });
             const result = await response.json();
             setResult(result);
-            console.log("Success: ", result);
+            console.log("Classification Successful: ", result);
     
         } catch (error) {
             console.error("Error: ", error);
