@@ -1,10 +1,10 @@
 'use client'
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import FileDragField from './components/FileDragField';
 import { Calistoga } from "next/font/google";
 import LinearGauge from "./components/LinearGauge";
-import {Card, CardHeader, CardBody, Image} from "@nextui-org/react";
+import ImagePreview from "./components/ImagePreview";
 
 const calistoga = Calistoga({
   subsets: ['latin'],
@@ -22,6 +22,7 @@ export default function Home() {
       </div>
       <FileDragField image={image} setImage={setImage} setResult={setResult}/>
       {result && <LinearGauge result={result}/>}
+      {image && <ImagePreview image={image} />}
     </main>
   );
 }
