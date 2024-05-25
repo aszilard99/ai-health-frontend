@@ -2,7 +2,7 @@ export default async function handleImageUpload(e, setImage, setFileEnter, setRe
     e.preventDefault();
 
     setFileEnter && setFileEnter(false);
-    
+
     let file;
     if (e.dataTransfer.items) {
         [...e.dataTransfer.items].forEach((item, i) => {
@@ -21,8 +21,27 @@ export default async function handleImageUpload(e, setImage, setFileEnter, setRe
     if (file) {
         setImage(URL.createObjectURL(file));
         const formData = uploadFile(file);
-        const result = await sendRequest(formData);
+        const response = await sendRequest(formData);
+        handleResponse(response, setResult);
+    }
+}
+
+async function handleResponse(response, setResult) {
+    if (!response || !response.status) {
+        return;
+    }
+
+    const status = response.status;
+    if (status == 200) {
+        const result = await response.json();
         setResult(result);
+        console.log("Classification successful: ", result);
+    } else if (status == 413) {
+        console.error("Unsuccessful operation. Image size was too big.");
+    } else if (status == 422){
+        console.error("Unsuccessful operation. The uploaded file has the wrong extension, it has to be .jpg or .jpeg.");
+    } else {
+        console.error("Unsuccessful operation by unknown cause.")
     }
 }
 
@@ -39,9 +58,7 @@ export async function sendRequest (formData) {
             method: "POST",
             body: formData
         });
-        const result = await response.json();
-        console.log("Classification Successful: ", result);
-        return result;
+        return response;
 
     } catch (error) {
         console.error("Error: ", error);
