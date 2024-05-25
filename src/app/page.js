@@ -6,6 +6,8 @@ import { Calistoga } from "next/font/google";
 import LinearGauge from "./components/LinearGauge";
 import ImagePreview from "./components/ImagePreview";
 import { Button } from "@nextui-org/react";
+import {Textarea} from "@nextui-org/input";
+
 const calistoga = Calistoga({
   subsets: ['latin'],
   weight: "400"
@@ -34,6 +36,15 @@ export default function Home() {
         >
           Retry
         </Button>}
+      </div>
+        <Textarea
+          isInvalid={true}
+          label="Error"
+          isReadOnly
+          defaultValue="Invalid file extension, it has to be .jpg or .jpeg"
+          variant="bordered"
+        />
+      <div>
       </div>
     </div>
   );
