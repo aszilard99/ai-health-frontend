@@ -22,7 +22,7 @@ export default function Home() {
       </div>
       {!image ? <FileDragField image={image} setImage={setImage} setResult={setResult}/> : <ImagePreview image={image} />}
       {result && <LinearGauge result={result}/>}
-      <Button color="primary">szia</Button>
+      <Button color="primary" onClick={() => setImage(null)}>Retry</Button>
     </main>
   );
 }

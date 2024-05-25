@@ -6,7 +6,6 @@ export default function FileDragField({image, setImage, setResult}) {
     function uploadFile (file) {
         
         const formData = new FormData();
-        //TODO this parameter name might have to be changed according to endpoint param name
         formData.append('image', file);
         sendRequest(formData);
     }
