@@ -1,4 +1,4 @@
-export default async function handleImageUpload(e, setImage, setFileEnter, setResult) {
+export default async function handleImageUpload(e, setImage, setFileEnter, setResult, setError) {
     e.preventDefault();
 
     setFileEnter && setFileEnter(false);
@@ -21,27 +21,27 @@ export default async function handleImageUpload(e, setImage, setFileEnter, setRe
     if (file) {
         setImage(URL.createObjectURL(file));
         const formData = uploadFile(file);
-        const response = await sendRequest(formData);
-        handleResponse(response, setResult);
+        const response = await sendRequest(formData, setError);
+        handleResponse(response, setResult, setError);
     }
 }
 
-async function handleResponse(response, setResult) {
-    if (!response || !response.status) {
-        return;
-    }
-
+async function handleResponse(response, setResult, setError) {
+    
     const status = response.status;
     if (status == 200) {
         const result = await response.json();
         setResult(result);
         console.log("Classification successful: ", result);
     } else if (status == 413) {
-        console.error("Unsuccessful operation. Image size was too big.");
+        setError("Image size is too large, maximum size allowed is 1 Mb.");
+        console.error("Image size is too large, maximum size allowed is 1 Mb");
     } else if (status == 422){
-        console.error("Unsuccessful operation. The uploaded file has the wrong extension, it has to be .jpg or .jpeg.");
+        setError("The uploaded file has the wrong extension, it has to be .jpg or .jpeg.");
+        console.error("The uploaded file has the wrong extension, it has to be .jpg or .jpeg");
     } else {
-        console.error("Unsuccessful operation by unknown cause.")
+        setError("Unsuccessful operation by unknown cause.");
+        console.error("Unsuccessful operation by unknown cause");
     }
 }
 
@@ -61,6 +61,7 @@ export async function sendRequest (formData) {
         return response;
 
     } catch (error) {
-        console.error("Error: ", error);
+        setError("The servers are unreachable at the moment, please try again later.");
+        console.error("The servers are unreachable. Error message: ", error);
     }
 }

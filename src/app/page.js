@@ -16,6 +16,7 @@ const calistoga = Calistoga({
 export default function Home() {
   const [image, setImage] = useState(null);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
 
   return (
     <div>
@@ -23,7 +24,7 @@ export default function Home() {
         <p className={calistoga.className} id="navbar-text">Ai-Health</p>
       </div>
       <div className="central-section-placeholder">
-        {!image ? <FileDragField image={image} setImage={setImage} setResult={setResult}/> : <ImagePreview image={image}/>}
+        {!image ? <FileDragField image={image} setImage={setImage} setResult={setResult} setError={setError}/> : <ImagePreview image={image}/>}
       </div>
       <div className="linear-gauge-placeholder">
       {result && <LinearGauge result={result}/>}
@@ -32,19 +33,21 @@ export default function Home() {
         {image && <Button className="retry-button" onClick={() => {
           setImage(null);
           setResult(null);
+          setError(null);
         }}
         >
           Retry
         </Button>}
-      </div>
-        <Textarea
-          isInvalid={true}
-          label="Error"
-          isReadOnly
-          defaultValue="Invalid file extension, it has to be .jpg or .jpeg"
-          variant="bordered"
-        />
-      <div>
+      {error && 
+          <Textarea
+            isInvalid={true}
+            label="Error"
+            isReadOnly
+            defaultValue="Invalid file extension, it has to be .jpg or .jpeg"
+            value={error}
+            variant="bordered"
+          />
+      }
       </div>
     </div>
   );
