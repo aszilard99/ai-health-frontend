@@ -1,30 +1,10 @@
 import { useState } from "react"
+import handleImageUpload from "../utils/UploadImageUtils";
+import { uploadFile } from "../utils/UploadImageUtils";
 
 export default function FileDragField({image, setImage, setResult}) {
     const [fileEnter, setFileEnter] = useState(false);
     
-    function uploadFile (file) {
-        
-        const formData = new FormData();
-        formData.append('image', file);
-        sendRequest(formData);
-    }
-    
-    async function sendRequest (formData) {
-        try {
-            const response = await fetch("http://127.0.0.1:8080/classify", {
-                method: "POST",
-                body: formData
-            });
-            const result = await response.json();
-            setResult(result);
-            console.log("Classification Successful: ", result);
-    
-        } catch (error) {
-            console.error("Error: ", error);
-        }
-    }
-
     return (
             <div>
                 <div 
@@ -40,23 +20,7 @@ export default function FileDragField({image, setImage, setResult}) {
                         setFileEnter(false);
                     }}
                     onDrop={(e) => {
-                        e.preventDefault();
-                        setFileEnter(false);
-                        if (e.dataTransfer.items) {
-                            [...e.dataTransfer.items].forEach((item, i) => {
-                                if (item.kind == 'file') {
-                                    const file  = item.getAsFile();
-                                    if (file) {
-                                        setImage(URL.createObjectURL(file));
-                                        uploadFile(file);
-                                    }
-                                }
-                            });
-                        } else {
-                            [...e.dataTransfer.files].forEach((file, i) => {
-                                console.log(`… file[${i}].name = ${file.name}`);
-                            })
-                        }
+                        handleImageUpload(e, setImage, setFileEnter, setResult);
                     }}
                     className={`${fileEnter ? "drag-field-highlighted" : "drag-field-normal"}`}
                     
