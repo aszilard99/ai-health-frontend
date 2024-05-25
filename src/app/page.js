@@ -20,9 +20,15 @@ export default function Home() {
       <div className="navbar">
         <p className={calistoga.className} id="navbar-text">Ai-Health</p>
       </div>
-      {!image ? <FileDragField image={image} setImage={setImage} setResult={setResult}/> : <ImagePreview image={image} />}
+      <div className="central-section-placeholder">
+        {!image ? <FileDragField image={image} setImage={setImage} setResult={setResult}/> : <ImagePreview image={image} />}
+      </div>
+      <div className="linear-gauge-placeholder">
       {result && <LinearGauge result={result}/>}
-      <Button color="primary" onClick={() => setImage(null)}>Retry</Button>
+      </div>
+      <div className="retry-button-wrapper">
+        <Button className="retry-button" onClick={() => setImage(null)}>Retry</Button>
+      </div>
     </main>
   );
 }

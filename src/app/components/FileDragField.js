@@ -26,7 +26,7 @@ export default function FileDragField({image, setImage, setResult}) {
     }
 
     return (
-            <div className="container">
+            <div>
                 <div 
                     onDragOver={(e) => {
                         e.preventDefault();
@@ -81,9 +81,6 @@ export default function FileDragField({image, setImage, setResult}) {
                         }}
                     />
             </div>
-        <div style={{ position: 'relative', width: '100%', height: '200px'}}>
-
-        </div>
         </div>
     )
 }
