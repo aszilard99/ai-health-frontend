@@ -36,10 +36,10 @@ export default function LinearGauge({result}) {
         container = d3.select(containerRef.current);
         width = parseFloat(container.style("width"));
         var gaugeScale = [
-            { "color": "#00CC96", "value": 0.227, "depth": 0, "risk": "no risk"},
-            { "color": "#00E7AA", "value": 0.380, "depth": 1,"risk": "low risk"},
-            { "color": "#FFAA00", "value": 0.260, "depth": 2,"risk": "somewhat risk"},
-            { "color": "#FF0000", "value": 0.133, "depth": 3, "risk": "hight risk"},
+            { "color": "#00e741", "value": 0.13, "depth": 1, "risk": "no risk"},
+            { "color": "#FFAA00", "value": 0.23, "depth": 2,"risk": "somewhat risk"},
+            { "color": "#FFAA00", "value": 0.33, "depth": 2,"risk": "somewhat risk"},
+            { "color": "#FF0000", "value": 0.63, "depth": 3, "risk": "hight risk"},
         ]
         
         chart_w = containerRef.current.clientWidth;

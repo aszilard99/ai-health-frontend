@@ -16,7 +16,7 @@ export default function Home() {
   const [result, setResult] = useState(null);
 
   return (
-    <main>
+    <div>
       <div className="navbar">
         <p className={calistoga.className} id="navbar-text">Ai-Health</p>
       </div>
@@ -27,8 +27,14 @@ export default function Home() {
       {result && <LinearGauge result={result}/>}
       </div>
       <div className="retry-button-wrapper">
-        <Button className="retry-button" onClick={() => setImage(null)}>Retry</Button>
+        {image && <Button className="retry-button" onClick={() => {
+          setImage(null);
+          setResult(null);
+        }}
+        >
+          Retry
+        </Button>}
       </div>
-    </main>
+    </div>
   );
 }
