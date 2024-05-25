@@ -21,7 +21,7 @@ export default function Home() {
         <p className={calistoga.className} id="navbar-text">Ai-Health</p>
       </div>
       <div className="central-section-placeholder">
-        {!image ? <FileDragField image={image} setImage={setImage} setResult={setResult}/> : <ImagePreview image={image} />}
+        {!image ? <FileDragField image={image} setImage={setImage} setResult={setResult}/> : <ImagePreview image={image}/>}
       </div>
       <div className="linear-gauge-placeholder">
       {result && <LinearGauge result={result}/>}
