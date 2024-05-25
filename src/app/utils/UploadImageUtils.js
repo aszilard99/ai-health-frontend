@@ -28,9 +28,14 @@ export default async function handleImageUpload(e, setImage, setFileEnter, setRe
             return;
         }
         const formData = uploadFile(file);
-        setImage(URL.createObjectURL(file));
         const response = await sendRequest(formData, setError);
-        response && handleResponse(response, setResult, setError);
+        let noError;
+        if (response) {
+            noError = await handleResponse(response, setResult, setError);
+        }
+        if (noError) { 
+            setImage(URL.createObjectURL(file));
+        }
     }
 }
 
@@ -41,6 +46,8 @@ async function handleResponse(response, setResult, setError) {
         const result = await response.json();
         setResult(result);
         console.log("Classification successful: ", result);
+        return true;
+
     } else if (status == 413) {
         setError("Image size is too large, maximum size allowed is 1 Mb.");
         console.error("Image size is too large, maximum size allowed is 1 Mb");
@@ -51,6 +58,7 @@ async function handleResponse(response, setResult, setError) {
         setError("Unsuccessful operation by unknown cause.");
         console.error("Unsuccessful operation by unknown cause");
     }
+    return false;
 }
 
 export function uploadFile (file) {

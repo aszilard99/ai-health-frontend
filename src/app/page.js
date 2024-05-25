@@ -28,6 +28,17 @@ export default function Home() {
       </div>
       <div className="linear-gauge-placeholder">
       {result && <LinearGauge result={result}/>}
+      {error && 
+          <Textarea
+            isInvalid={true}
+            label="Error"
+            isReadOnly
+            defaultValue="Invalid file extension, it has to be .jpg or .jpeg"
+            value={error}
+            variant="bordered"
+            className="max-w-xs mr-auto ml-auto mt-8"
+          />
+      }
       </div>
       <div className="retry-button-wrapper">
         {image && <Button className="retry-button" onClick={() => {
@@ -38,16 +49,6 @@ export default function Home() {
         >
           Retry
         </Button>}
-      {error && 
-          <Textarea
-            isInvalid={true}
-            label="Error"
-            isReadOnly
-            defaultValue="Invalid file extension, it has to be .jpg or .jpeg"
-            value={error}
-            variant="bordered"
-          />
-      }
       </div>
     </div>
   );
