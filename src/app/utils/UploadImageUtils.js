@@ -1,7 +1,10 @@
+const ONE_MEGABYTE_IN_BYTES = 1048576;
+
 export default async function handleImageUpload(e, setImage, setFileEnter, setResult, setError) {
     e.preventDefault();
 
     setFileEnter && setFileEnter(false);
+    setError(null)
 
     let file;
     if (e.dataTransfer.items) {
@@ -19,10 +22,15 @@ export default async function handleImageUpload(e, setImage, setFileEnter, setRe
         })
     }
     if (file) {
-        setImage(URL.createObjectURL(file));
+        if (file.size > ONE_MEGABYTE_IN_BYTES) {
+            setError("Image size is too large, maximum size allowed is 1 Mb.");
+            console.error("Image size is too large, maximum size allowed is 1 Mb");
+            return;
+        }
         const formData = uploadFile(file);
+        setImage(URL.createObjectURL(file));
         const response = await sendRequest(formData, setError);
-        handleResponse(response, setResult, setError);
+        response && handleResponse(response, setResult, setError);
     }
 }
 
@@ -52,7 +60,7 @@ export function uploadFile (file) {
     return formData;
 }
 
-export async function sendRequest (formData) {
+export async function sendRequest (formData, setError) {
     try {
         const response = await fetch("http://127.0.0.1:8080/classify", {
             method: "POST",
