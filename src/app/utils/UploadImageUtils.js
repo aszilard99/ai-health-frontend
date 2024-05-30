@@ -51,11 +51,17 @@ async function handleResponse(response, setResult, setError) {
     } else if (status == 413) {
         setError("Image size is too large, maximum size allowed is 1 Mb.");
         console.error("Image size is too large, maximum size allowed is 1 Mb");
+    } else if (status == 415){
+        setError("The uploaded image is not grayscale");
+        console.error("The uploaded image is not grayscale");
     } else if (status == 422){
-        setError("The uploaded file has the wrong extension, it has to be .jpg or .jpeg.");
-        console.error("The uploaded file has the wrong extension, it has to be .jpg or .jpeg");
+        setError("The uploaded image has the wrong extension, it has to be .jpg or .jpeg.");
+        console.error("The uploaded image has the wrong extension, it has to be .jpg or .jpeg");
+    } else if (status == 472){
+        setError("The uploaded image has too small resolution, it has to be atleast 50x50");
+        console.error("The uploaded image has too small resolution, it has to be atleast 50x50");
     } else {
-        setError("Unsuccessful operation by unknown cause.");
+        setError("Unsuccessful operation.");
         console.error("Unsuccessful operation by unknown cause");
     }
     return false;

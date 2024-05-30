@@ -27,23 +27,10 @@ export default function FileDragField({image, setImage, setResult, setError}) {
                 >
                     <label
                         htmlFor="file"
-                        className="drag-field-label"
+                        className="drag-field-label font-light"
                     >
-                        Click to upload or drag and drop
+                        Drag and drop an image to upload
                     </label>
-                    <input 
-                        id='file' 
-                        type='file' 
-                        className="drag-field-input"
-                        onChange={(e) => {
-                            console.log(e.target.files);
-                            const files = e.target.files;
-                            if (files && files[0]) {
-                                setImage(URL.createObjectURL(files[0]));
-                                uploadFile(files[0]);
-                            } 
-                        }}
-                    />
             </div>
         </div>
     )

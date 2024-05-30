@@ -41,13 +41,13 @@ export default function Home() {
       }
       </div>
       <div className="retry-button-wrapper">
-        {image && <Button className="retry-button" onClick={() => {
+        {image && <Button className="retry-button" color="black" onClick={() => {
           setImage(null);
           setResult(null);
           setError(null);
         }}
         >
-          Retry
+          <p className="tracking-wider font-bold">Retry</p>
         </Button>}
       </div>
     </div>

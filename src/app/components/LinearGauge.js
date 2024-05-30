@@ -119,6 +119,10 @@ export default function LinearGauge({result}) {
     return(
         <div>
             <div id="linear-gauge" ref={containerRef}>
+                <div className="flex flex-row justify-between">
+                    <div className="relative right-8 bottom-2 font-medium">No Tumor</div>
+                    <div className="relative left-5 bottom-2 font-medium">Tumor</div>
+                </div>
             </div>
         </div>
     );
