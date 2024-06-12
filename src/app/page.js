@@ -7,6 +7,8 @@ import LinearGauge from "./components/LinearGauge";
 import ImagePreview from "./components/ImagePreview";
 import { Button } from "@nextui-org/react";
 import {Textarea} from "@nextui-org/input";
+import Image from "next/image";
+import logo from "./assets/logo.svg"
 
 const calistoga = Calistoga({
   subsets: ['latin'],
@@ -22,6 +24,7 @@ export default function Home() {
     <div>
       <div className="navbar">
         <p className={calistoga.className} id="navbar-text">Ai-Health</p>
+        <Image src={logo} className="logo"/>
       </div>
       <div className="central-section-placeholder">
         {!image ? <FileDragField image={image} setImage={setImage} setResult={setResult} setError={setError}/> : <ImagePreview image={image}/>}
