@@ -1,6 +1,5 @@
 import { useState } from "react"
 import handleImageUpload from "../utils/UploadImageUtils";
-import { uploadFile } from "../utils/UploadImageUtils";
 
 export default function FileDragField({image, setImage, setResult, setError}) {
     const [fileEnter, setFileEnter] = useState(false);
@@ -29,7 +28,7 @@ export default function FileDragField({image, setImage, setResult, setError}) {
                         htmlFor="file"
                         className="drag-field-label font-light"
                     >
-                        Drag and drop an image to upload
+                        Drag and drop a jpeg image to upload
                     </label>
             </div>
         </div>
